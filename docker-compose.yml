@@ -1,0 +1,21 @@
+#version: "3.9"
+
+services:
+  logsearch_web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: logsearch-webui
+    ports:
+      - "8000:8000"
+    environment:
+      - TZ=America/New_York   # set your local timezone
+    volumes:
+      # Mount parser + web UI (read-only)
+      - ./logsearch.py:/app/logsearch.py:ro
+      - ./webui:/app/webui:ro
+      # Runtime data persisted on host
+      - ./data/uploads:/app/webui/uploads
+      - ./data/results:/app/webui/results
+    restart: unless-stopped
+
