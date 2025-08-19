@@ -1,0 +1,66 @@
+{
+  "include": [
+    "./logs/*.log",
+    "~/Downloads/**/*.log",
+    "~/Downloads/**/*.out",
+    "~/Downloads/**/*.gz",
+    "~/Downloads/**/*.log.gz"
+  ],
+  "exclude": [
+    "*/archive/*",
+    "*.old"
+  ],
+  "encoding": "utf-8",
+  "ignore_case": true,
+  "keywords": [
+    "ERROR",
+    "Timeout",
+    "sync failed",
+    "connection reset by peer"
+  ],
+  "regexes": [
+    "\\b5\\d{2}\\b",
+    "exception:\\s+\\w+"
+  ],
+  "match_mode": "any",
+  "timestamp": {
+    "enabled": true,
+    "regex": "(?P<ts>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2})",
+    "strftime": "%Y-%m-%dT%H:%M:%S",
+    "assume_tz": "UTC"
+  },
+  "field_patterns": [
+    {
+      "name": "haproxy",
+      "regex": "(?P<client_ip>\\d{1,3}(?:\\.\\d{1,3}){3})[:]\\d+\\s+\\[(?P<accept_date>[^\\]]+)\\]\\s+(?P<frontend>\\S+)\\s+(?P<backend>\\S+)/(?:\\S+)\\s+(?P<server>\\S+)\\s+(?P<Tq>\\d+)/(?P<Tw>\\d+)/(?P<Tc>\\d+)/(?P<Tr>\\d+)/(?P<Tt>\\d+)\\s+(?P<status>\\d{3})\\s+(?P<bytes>\\d+)\\s+(?P<captured_request_cookie>\\S+)\\s+(?P<captured_response_cookie>\\S+)\\s+(?P<termination_state>\\S+)\\s+(?P<actconn>\\d+)/(?P<feconn>\\d+)/(?P<beconn>\\d+)/(?P<srvconn>\\d+)/(?P<retries>\\d+)\\s+(?P<srv_queue>\\d+)/(?P<backend_queue>\\d+)\\s+\\\"(?P<method>\\S+)\\s+(?P<path>[^\\\"]+)\\s+(?P<http>HTTP/\\d\\.\\d)\\\"\\s+\\\"(?P<referrer>[^\\\"]*)\\\"\\s+\\\"(?P<user_agent>[^\\\"]*)\\\""
+    },
+    {
+      "name": "apache_combined",
+      "regex": "(?P<ip>\\S+) \\S+ \\S+ \\[(?P<ts>[^\\]]+)\\] \\\"(?P<method>\\S+) (?P<path>\\S+) (?P<proto>[^\\\"]+)\\\" (?P<status>\\d{3}) (?P<size>\\S+) \\\"(?P<referrer>[^\\\"]*)\\\" \\\"(?P<user_agent>[^\\\"]*)\\\""
+    },
+    {
+      "name": "nginx_access",
+      "regex": "(?P<ip>\\S+) - \\S+ \\[(?P<ts>[^\\]]+)\\] \\\"(?P<method>\\S+) (?P<path>\\S+) (?P<proto>[^\\\"]+)\\\" (?P<status>\\d{3}) (?P<size>\\d+) \\\"(?P<referrer>[^\\\"]*)\\\" \\\"(?P<user_agent>[^\\\"]*)\\\""
+    },
+    {
+      "name": "iis_w3c",
+      "regex": "(?P<date>\\d{4}-\\d{2}-\\d{2})\\s+(?P<time>\\d{2}:\\d{2}:\\d{2})\\s+(?P<s_ip>\\S+)\\s+(?P<cs_method>\\S+)\\s+(?P<cs_uri_stem>\\S+)\\s+(?P<cs_uri_query>\\S*)\\s+(?P<s_port>\\d+)\\s+(?P<cs_username>\\S*)\\s+(?P<c_ip>\\S+)\\s+(?P<cs_user_agent>\\\"[^\\\"]*\\\"|\\S+)\\s+(?P<sc_status>\\d+)\\s+(?P<sc_substatus>\\d+)\\s+(?P<sc_win32_status>\\d+)\\s+(?P<time_taken>\\d+)"
+    },
+    {
+      "name": "haproxy_http_default",
+      "regex": "(?P<client_ip>\\d{1,3}(?:\\.\\d{1,3}){3}):\\d+\\s+\\[(?P<accept_date>[^\\]]+)\\]\\s+(?P<frontend>\\S+)\\s+(?P<backend>\\S+)/(?P<server>\\S+)\\s+(?P<Tq>\\d+)/(?P<Tw>\\d+)/(?P<Tc>\\d+)/(?P<Tr>\\d+)/(?P<Tt>\\d+)\\s+(?P<status>\\d{3})\\s+(?P<bytes>\\d+)\\s+(?P<captured_request_cookie>\\S+)\\s+(?P<captured_response_cookie>\\S+)\\s+(?P<termination_state>\\S+)\\s+(?P<actconn>\\d+)/(?P<feconn>\\d+)/(?P<beconn>\\d+)/(?P<srvconn>\\d+)/(?P<retries>\\d+)\\s+(?P<srv_queue>\\d+)/(?P<backend_queue>\\d+)\\s+\\\"(?P<method>\\S+)\\s+(?P<path>[^\\\"]+)\\s+(?P<http>HTTP/\\d\\.\\d)\\\"\\s+\\\"(?P<referrer>[^\\\"]*)\\\"\\s+\\\"(?P<user_agent>[^\\\"]*)\\\""
+    },
+    {
+      "name": "haproxy_tcp",
+      "regex": "(?P<client_ip>\\d{1,3}(?:\\.\\d{1,3}){3}):\\d+\\s+\\[(?P<accept_date>[^\\]]+)\\]\\s+(?P<frontend>\\S+)\\s+(?P<backend>\\S+)/(?P<server>\\S+)\\s+(?P<Tq>\\d+)/(?P<Tw>\\d+)/(?P<Tc>\\d+)/(?P<Tr>\\d+)/(?P<Tt>\\d+)\\s+(?P<status>-|\\d{3})\\s+(?P<bytes>\\d+)\\s+(?P<captured_request_cookie>\\S+)\\s+(?P<captured_response_cookie>\\S+)\\s+(?P<termination_state>\\S+)\\s+(?P<actconn>\\d+)/(?P<feconn>\\d+)/(?P<beconn>\\d+)/(?P<srvconn>\\d+)/(?P<retries>\\d+)\\s+(?P<srv_queue>\\d+)/(?P<backend_queue>\\d+)"
+    },
+    {
+      "name": "haproxy_http_syslog",
+      "regex": "(?:(?P<syslog_prefix>[^:]+):\\s+)?(?P<client_ip>\\d{1,3}(?:\\.\\d{1,3}){3}):\\d+\\s+\\[(?P<accept_date>[^\\]]+)\\]\\s+(?P<frontend>\\S+)\\s+(?P<backend>\\S+)/(?P<server>\\S+)\\s+(?P<Tq>\\d+)/(?P<Tw>\\d+)/(?P<Tc>\\d+)/(?P<Tr>\\d+)/(?P<Tt>\\d+)\\s+(?P<status>\\d{3})\\s+(?P<bytes>\\d+)\\s+(?P<captured_request_cookie>\\S+)\\s+(?P<captured_response_cookie>\\S+)\\s+(?P<termination_state>\\S+)\\s+(?P<actconn>\\d+)/(?P<feconn>\\d+)/(?P<beconn>\\d+)/(?P<srvconn>\\d+)/(?P<retries>\\d+)\\s+(?P<srv_queue>\\d+)/(?P<backend_queue>\\d+)\\s+\\\"(?P<method>\\S+)\\s+(?P<path>[^\\\"]+)\\s+(?P<http>HTTP/\\d\\.\\d)\\\""
+    }
+  ],
+  "output": {
+    "format": "console",
+    "path": null
+  }
+}
