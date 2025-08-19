@@ -1,0 +1,65 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>Log Parser Web UI</h1>
+<p class="muted">Upload a <strong>.zip</strong>, <strong>.log</strong>, or <strong>.gz</strong>. Choose keywords/regex (optional). The app will auto-detect and parse.</p>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <div class="row">
+    <div style="flex:1 1 360px">
+      <label>Log file (.zip, .log, .gz)</label>
+      <input type="file" name="file" required>
+      <p class="muted">ZIPs are extracted and scanned recursively.</p>
+    </div>
+    <div style="flex:1 1 240px">
+      <label>Output format</label>
+      <select name="format">
+        <option value="console">Console</option>
+        <option value="csv">CSV</option>
+        <option value="jsonl" selected>JSONL</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="flex:1 1 300px">
+      <label>Keywords (one per line, optional)</label>
+      <textarea name="keywords" rows="6" placeholder="ERROR
+exception
+timeout"></textarea>
+    </div>
+    <div style="flex:1 1 300px">
+      <label>Regex patterns (one per line, optional)</label>
+      <textarea name="regexes" rows="6" placeholder="\b5\d{2}\b
+termination_state [^ ]*"></textarea>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="flex:1 1 280px">
+      <label>Match mode</label>
+      <select name="match_mode">
+        <option value="any" selected>Any (OR)</option>
+        <option value="all">All (AND)</option>
+      </select>
+    </div>
+    <div style="flex:1 1 280px">
+      <label>Case-insensitive</label>
+      <select name="ignore_case">
+        <option value="true" selected>true</option>
+        <option value="false">false</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="flex:1 1 100%">
+      <button type="submit">Parse Logs</button>
+    </div>
+  </div>
+</form>
+{% if message %}
+  <p class="{{'success' if ok else 'error'}}">{{ message }}</p>
+{% endif %}
+
+{% endblock %}

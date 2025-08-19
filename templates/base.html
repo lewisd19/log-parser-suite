@@ -1,0 +1,33 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Log Parser Web UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
+    .card { max-width: 980px; margin: 0 auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    input[type=file], input[type=text], textarea, select { width: 100%; padding: .6rem .7rem; border: 1px solid #d1d5db; border-radius: 8px; }
+    label { font-weight: 600; display: block; margin-bottom: .4rem; }
+    button { background: #111827; color: #fff; border: none; padding: .7rem 1.2rem; border-radius: 8px; cursor: pointer;}
+    button.secondary { background: #374151; }
+    table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    th, td { border: 1px solid #e5e7eb; padding: .4rem .5rem; text-align: left; vertical-align: top;}
+    th { background: #f9fafb; }
+    .muted { color: #6b7280; }
+    .pill { display: inline-block; padding: .15rem .45rem; border-radius: 999px; background: #eef2ff; color: #3730a3; font-size: 12px; }
+    .links a { margin-right: .75rem; }
+    .footer { margin-top: 2rem; color: #6b7280; font-size: 13px; }
+    .success { background: #ecfdf5; border: 1px solid #10b98133; padding: .6rem .8rem; border-radius: 8px; }
+    .error { background: #fef2f2; border: 1px solid #ef444433; padding: .6rem .8rem; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    {% block content %}{% endblock %}
+  </div>
+  <div class="footer">Log Parser Web UI • FastAPI • Uses your local <code>logsearch.py</code></div>
+</body>
+</html>

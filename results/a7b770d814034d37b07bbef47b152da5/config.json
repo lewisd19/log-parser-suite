@@ -1,0 +1,36 @@
+{
+  "include": [
+    "/Users/dlewis/Desktop/Log_Parser/logparser_webgui/results/a7b770d814034d37b07bbef47b152da5/**/*.log",
+    "/Users/dlewis/Desktop/Log_Parser/logparser_webgui/results/a7b770d814034d37b07bbef47b152da5/**/*.out",
+    "/Users/dlewis/Desktop/Log_Parser/logparser_webgui/results/a7b770d814034d37b07bbef47b152da5/**/*.gz",
+    "/Users/dlewis/Desktop/Log_Parser/logparser_webgui/results/a7b770d814034d37b07bbef47b152da5/**/*.log.gz"
+  ],
+  "exclude": [
+    "**/archive/**",
+    "**/.Trash/**"
+  ],
+  "encoding": "utf-8",
+  "ignore_case": true,
+  "keywords": [
+    "exception",
+    "ERROR"
+  ],
+  "regexes": [],
+  "match_mode": "any",
+  "timestamp": {
+    "enabled": true,
+    "regex": "(?P<ts>\\d{4}-\\d{2}-\\d{2}[ T]\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)",
+    "strftime": "%Y-%m-%d %H:%M:%S.%f",
+    "assume_tz": "local"
+  },
+  "field_patterns": [
+    {
+      "name": "haproxy_http_default",
+      "regex": "(?P<client_ip>\\d{1,3}(?:\\.\\d{1,3}){3}):\\d+\\s+\\[(?P<accept_date>[^\\]]+)\\]\\s+(?P<frontend>\\S+)\\s+(?P<backend>\\S+)/(?P<server>\\S+)\\s+(?P<Tq>\\d+)/(?P<Tw>\\d+)/(?P<Tc>\\d+)/(?P<Tr>\\d+)/(?P<Tt>\\d+)\\s+(?P<status>\\d{3})\\s+(?P<bytes>\\d+)\\s+(?P<captured_request_cookie>\\S+)\\s+(?P<captured_response_cookie>\\S+)\\s+(?P<termination_state>\\S+)\\s+(?P<actconn>\\d+)/(?P<feconn>\\d+)/(?P<beconn>\\d+)/(?P<srvconn>\\d+)/(?P<retries>\\d+)\\s+(?P<srv_queue>\\d+)/(?P<backend_queue>\\d+)\\s+\\\"(?P<method>\\S+)\\s+(?P<path>[^\\\"]+)\\s+(?P<http>HTTP/\\d\\.\\d)\\\"\\s+\\\"(?P<referrer>[^\\\"]*)\\\"\\s+\\\"(?P<user_agent>[^\\\"]*)\\\""
+    }
+  ],
+  "output": {
+    "format": "jsonl",
+    "path": "/Users/dlewis/Desktop/Log_Parser/logparser_webgui/results/a7b770d814034d37b07bbef47b152da5/results.jsonl"
+  }
+}

@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>Results</h1>
+<p class="links">
+  <a href="{{jsonl_url}}">Download JSONL</a>
+  {% if csv_url %}<a href="{{csv_url}}">Download CSV</a>{% endif %}
+  <a href="/">← Back</a>
+</p>
+
+{% if preview %}
+  <table>
+    <thead>
+      <tr>
+        {% for k in header %}<th>{{k}}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in preview %}
+        <tr>
+          {% for k in header %}
+            <td><code>{{ row.get(k, "") }}</code></td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="muted">No matches found for the given criteria.</p>
+{% endif %}
+{% endblock %}
